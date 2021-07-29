@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import with_statement
 
+import time
 import os
 import sys
 import six
@@ -356,6 +357,10 @@ def launch(reactor,
         env={'HOME': data_directory},
         path=data_directory if os.path.exists(data_directory) else None,  # XXX error if it doesn't exist?
     )
+    # this sleep is a hack to address
+    # https://github.com/meejah/txtorcon/issues/349
+    time.sleep(1)
+
     transport.closeStdin()
     proto = yield connected_cb
     # note "proto" here is a TorProcessProtocol
